@@ -2,6 +2,8 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
+# ini_set("display_errors", true);
+
 $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 
 // Enable APC for autoloading to improve performance.
