@@ -2,6 +2,10 @@
     margin-top: 7em;
 }
 
+.img-header{
+    margin: -3em 0 0 0;
+}
+
 .button-ingredients{
     background-color: #f18740;
     border:none;
