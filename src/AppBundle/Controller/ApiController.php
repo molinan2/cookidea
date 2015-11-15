@@ -36,7 +36,7 @@ class ApiController extends FOSRestController
      *
      * @Post("ingredients/")
      */
-    public function testAction(Request $request)
+    public function ingredientsAction(Request $request)
     {
         /** @var EntityManager $em */
         $em = $this->get('doctrine')->getManager();
@@ -44,8 +44,10 @@ class ApiController extends FOSRestController
         /** @var ApiHelper $apiHelper */
         $apiHelper = $this->get('apihelper');
 
+        /*
         if (!$apiHelper->checkCredentials($request))
             return $apiHelper->responseError();
+        */
 
         $ingredients = $em->getRepository('AppBundle:Ingredient')->findAll();
 
