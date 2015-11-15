@@ -55,3 +55,8 @@ sonata_user_change_password:
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /api/doc
+
+rest_api:
+    type: rest
+    resource: @AppBundle/Controller/ApiController.php
+    prefix: /api/

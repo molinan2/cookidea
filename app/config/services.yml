@@ -12,9 +12,33 @@ services:
 
     apihelper:
         class: AppBundle\Services\ApiHelper
-        arguments: ["@doctrine", "@fos_rest.view_handler"]
+        arguments: ["@doctrine.orm.entity_manager", "@fos_rest.view_handler", "@security.password_encoder"]
 
     sopinet_user_provider:
         class: AppBundle\Security\Core\User\FOSUBUserProvider
         #this is the place where the properties are passed to the UserProvider - see config.yml
         arguments: [@fos_user.user_manager, { facebook: facebookUid, google: gplusUid }]
+
+    app.admin.recipe:
+        class: AppBundle\Admin\RecipeAdmin
+        arguments: [~, AppBundle\Entity\Recipe, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Recipe }
+
+    app.admin.comment:
+        class: AppBundle\Admin\CommentAdmin
+        arguments: [~, AppBundle\Entity\Comment, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Comment }
+
+    app.admin.ingredient:
+        class: AppBundle\Admin\IngredientAdmin
+        arguments: [~, AppBundle\Entity\Ingredient, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Ingredient }
+
+    app.admin.recipe_ingredient:
+        class: AppBundle\Admin\RecipeIngredientAdmin
+        arguments: [~, AppBundle\Entity\RecipeIngredient, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: RecipeIngredient }

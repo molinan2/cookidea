@@ -30,8 +30,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form:
-        resources: ['bootstrap_3_layout.html.twig']
+    # form:
+    #    resources: ['bootstrap_3_layout.html.twig']
 
 # Assetic Configuration
 assetic:
@@ -86,7 +86,7 @@ sonata_admin:
 fos_user:
     db_driver: orm
     firewall_name: main # nombre anterior
-    user_class: Application\Sonata\UserBundle\Entity\User
+    user_class: AppBundle\Entity\User
     group:
         group_class:   Application\Sonata\UserBundle\Entity\Group
         group_manager: sonata.user.orm.group_manager
@@ -98,28 +98,30 @@ sonata_user:
     security_acl: false
     manager_type: orm # can be orm or mongodb
     class:                  # Entity Classes
-        user:               Application\Sonata\UserBundle\Entity\User
+        user:               AppBundle\Entity\User
         group:              Application\Sonata\UserBundle\Entity\Group
     admin:
         user:
-            class: Application\Sonata\UserBundle\Admin\UserAdmin
+            class: AppBundle\Admin\UserAdmin
         group:
             class: Application\Sonata\UserBundle\Admin\GroupAdmin
 
+
 # JSM Serializer
 jms_serializer:
-  metadata:
-    auto_detection: true
-    directories:
-      FOSUserBundle:
-        namespace_prefix: "FOS\\UserBundle"
-        path: "@ApplicationSonataUserBundle/Resources/config/serializer/fos"
-      SonataUserBundle:
-        namespace_prefix: "Sonata\\UserBundle"
-        path: "@ApplicationSonataUserBundle/Resources/config/serializer/sonata"
-      ApplicationSonataUserBundle:
-        namespace_prefix: "Sonata\\UserBundle"
-        path: "@ApplicationSonataUserBundle/Resources/config/serializer/"
+    visitors:
+        json:
+            options: [JSON_UNESCAPED_SLASHES, JSON_UNESCAPED_UNICODE]
+    metadata:
+        auto_detection: true
+        directories:
+            FOSUserBundle:
+                namespace_prefix: "FOS\\UserBundle"
+                path: "@ApplicationSonataUserBundle/Resources/config/serializer"
+            SonataUserBundle:
+                namespace_prefix: "Sonata\\UserBundle"
+                path: "@ApplicationSonataUserBundle/Resources/config/serializer"
+
 
 # Sonata Block
 sonata_block:
@@ -131,11 +133,16 @@ sonata_block:
         sonata.block.service.action:
         sonata.block.service.rss:
         sonata.block.service.tableinput:
+        sonata.admin.block.search_result:
 
-# FOS Rest API
+# Configuración de FOS Rest (debería venir en BasicSymfony?)
 fos_rest:
+    format_listener: true
     routing_loader:
         default_format: json
+        include_format: false
+    serializer:
+        serialize_null: true
 
 # app/config/config.yml
 nelmio_api_doc: ~
